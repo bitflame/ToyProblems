@@ -17,7 +17,7 @@ public class Solution3 {
         map.put(7, "pqrs");
         map.put(8, "tuv");
         map.put(9, "wxyz");
-        if (digits.length() == 0) {
+        if (digits.length() == 0 || digits == null) {
             return result;
         }
         letterCombinationsRecursiveCall(result, digits, "", 0);
