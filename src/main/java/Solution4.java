@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Solution4 {
     public List<String> letterCombinations(String digits) {
+        // code from GoodTecher https://www.youtube.com/watch?v=h6FmiyYDjmk
         Map<Character, char[]> mapping = new HashMap<>();
         List<String> result = new ArrayList<>();
         if (digits == null || digits.equals("")) {
