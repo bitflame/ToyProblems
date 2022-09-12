@@ -25,6 +25,7 @@ public class MultiplesThreeAndFive {
         int m = 3;
         int n = 5;
         int limit = 1000;
+	// int limit = 100;
         MultiplesThreeAndFive multiplesThreeAndFive = new MultiplesThreeAndFive();
         for(int i: multiplesThreeAndFive.calculateMultiples(m, n, limit)) System.out.print(" "+i);
         System.out.println();

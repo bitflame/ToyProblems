@@ -40,11 +40,29 @@ public class TwoSum {
         return null;
     }
 
+    private int[] func1(int[] nums, int target) {
+        Map<Integer, Integer> mapping = new HashMap<>();
+        int[] result = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            // mapping.put(i, nums[i]);
+            if (!mapping.containsKey(target - nums[i])) {
+                mapping.put(nums[i], i);
+            } else {
+                result[0] = mapping.get(target - nums[i]);
+                result[1] = i;
+            }
+
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
+
         int[] nums = {3, 2, 4};
         // StdOut.print("Hello");
         TwoSum twoSum = new TwoSum();
         int target = 6;
+        System.out.println(twoSum.func1(nums, target));
         System.out.printf("HashMap approach - Expecting [1, 2], actual:\n[");
         for (int i : twoSum.twoSumHashMap(nums, target)) {
             System.out.printf(" %d", i);

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Solution {
     HashMap<Integer, String> map = new HashMap<>();
@@ -22,7 +23,7 @@ public class Solution {
         }
         int index = Character.getNumericValue(digits.charAt(0));
         for (Character c : map.get(index).toCharArray()) result.add("" + c);
-        if (digits.length()==1){
+        if (digits.length() == 1) {
             return result;
         }
         return func2(result, digits, 1);
@@ -43,12 +44,44 @@ public class Solution {
         return func2(newList, s, currentIndex);
     }
 
+    public int lenghtOfLongestSubString(String s) {
+        Map<Integer, Character> uniqueString = new HashMap<Integer, Character>();
+        int i = 0;//start of string
+        int j = 1;// current cursor
+        int longestLength = 0;
+        uniqueString.put(i, s.charAt(i));
+        while (j < s.length()) {
+            if (!uniqueString.containsValue(s.charAt(j))) {
+                uniqueString.put(j, s.charAt(j));
+                j++;
+            } else {
+                i++;
+                if (i==j){
+                    j = i + 1;
+                    if (longestLength<uniqueString.size())longestLength=uniqueString.size();
+                    uniqueString = new HashMap<Integer, Character>();
+                    uniqueString.put(i,s.charAt(i));
+                }
+            }
+        }
+        return longestLength;
+    }
+
     public static void main(String[] args) {
+
+        Solution s = new Solution();
+        String subString1 = "abcabcbb";
+        String subString2 = "bbbbb";
+        String subString3 = "pwwkew";
+        System.out.println("Running Length of Longest Substring");
+        System.out.println("Expecting 3, Getting: " + s.lenghtOfLongestSubString(subString1));
+        System.out.println("Expecting 1, Getting: " + s.lenghtOfLongestSubString(subString2));
+        System.out.println("Expecting 3, Getting: " + s.lenghtOfLongestSubString(subString3));
         String test1 = "23";
         String test2 = "";
         String test3 = "2";
         String test4 = "234";
-        Solution s = new Solution();
+        System.out.println("Running Letter Combinations of Phone# ");
         System.out.println(s.letterCombinations(test1));
         System.out.println(s.letterCombinations(test2));
         // expecting ["adg","adh","adi","aeg","aeh","aei","afg","afh","afi","bdg","bdh","bdi","beg","beh","bei","bfg","bfh","bfi","cdg","cdh","cdi","ceg","ceh","cei","cfg","cfh","cfi"]
