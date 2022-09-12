@@ -45,24 +45,25 @@ public class Solution {
     }
 
     public int lenghtOfLongestSubString(String s) {
+        if (s == null || s.length() == 0) return 0;
+        if (s.length() == 1) return 1;
         Map<Integer, Character> uniqueString = new HashMap<Integer, Character>();
         int i = 0;//start of string
         int j = 1;// current cursor
         int longestLength = 0;
         uniqueString.put(i, s.charAt(i));
+        longestLength++;
         while (j < s.length()) {
             if (!uniqueString.containsValue(s.charAt(j))) {
                 uniqueString.put(j, s.charAt(j));
                 j++;
             } else {
                 i++;
-                if (i==j){
-                    j = i + 1;
-                    if (longestLength<uniqueString.size())longestLength=uniqueString.size();
-                    uniqueString = new HashMap<Integer, Character>();
-                    uniqueString.put(i,s.charAt(i));
-                }
+                j = i + 1;
+                uniqueString = new HashMap<Integer, Character>();
+                uniqueString.put(i, s.charAt(i));
             }
+            if (longestLength < uniqueString.size()) longestLength = uniqueString.size();
         }
         return longestLength;
     }
@@ -73,10 +74,16 @@ public class Solution {
         String subString1 = "abcabcbb";
         String subString2 = "bbbbb";
         String subString3 = "pwwkew";
+        String subString4 = " ";
+        String subString5 = "au";
+        String subString6 = "dvdf";
         System.out.println("Running Length of Longest Substring");
         System.out.println("Expecting 3, Getting: " + s.lenghtOfLongestSubString(subString1));
         System.out.println("Expecting 1, Getting: " + s.lenghtOfLongestSubString(subString2));
         System.out.println("Expecting 3, Getting: " + s.lenghtOfLongestSubString(subString3));
+        System.out.println("Expected 1, Getting: " + s.lenghtOfLongestSubString(subString4));
+        System.out.println("Expecting 2, Getting: " + s.lenghtOfLongestSubString(subString5));
+        System.out.println("Expecting 3, Getting: " + s.lenghtOfLongestSubString(subString6));
         String test1 = "23";
         String test2 = "";
         String test3 = "2";
