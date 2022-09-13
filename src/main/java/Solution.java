@@ -1,7 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import edu.princeton.cs.algs4.SET;
+
+import java.util.*;
 
 public class Solution {
     HashMap<Integer, String> map = new HashMap<>();
@@ -47,21 +46,21 @@ public class Solution {
     public int lenghtOfLongestSubString(String s) {
         if (s == null || s.length() == 0) return 0;
         if (s.length() == 1) return 1;
-        Map<Integer, Character> uniqueString = new HashMap<Integer, Character>();
+        HashSet< Character> uniqueString = new HashSet<Character>();
         int i = 0;//start of string
-        int j = 1;// current cursor
+        int j = 0;// current cursor
         int longestLength = 0;
-        uniqueString.put(i, s.charAt(i));
-        longestLength++;
         while (j < s.length()) {
-            if (!uniqueString.containsValue(s.charAt(j))) {
-                uniqueString.put(j, s.charAt(j));
+            if (!uniqueString.contains(s.charAt(j))){
+                uniqueString.add(s.charAt(j));
                 j++;
-            } else {
+            }
+           else {
                 i++;
-                j = i + 1;
-                uniqueString = new HashMap<Integer, Character>();
-                uniqueString.put(i, s.charAt(i));
+                j = i ;
+                uniqueString = new HashSet<>();
+                uniqueString.add(s.charAt(j));
+                j++;
             }
             if (longestLength < uniqueString.size()) longestLength = uniqueString.size();
         }
