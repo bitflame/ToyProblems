@@ -108,8 +108,9 @@ public class Solution {
 
         Solution s = new Solution();
         int[][] obsGrid = {{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
-        System.out.println(s.uniquePathsWithObstacles(obsGrid));
-
+        System.out.println("Expected: 2, Getting: " + s.uniquePathsWithObstacles(obsGrid));
+        obsGrid = new int[][]{{0, 0}, {0, 1}};
+        System.out.println("Expected: 0, Getting: " + s.uniquePathsWithObstacles(obsGrid));
         String subString1 = "abcabcbb";
         String subString2 = "bbbbb";
         String subString3 = "pwwkew";
