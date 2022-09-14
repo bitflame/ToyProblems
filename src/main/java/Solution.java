@@ -85,12 +85,14 @@ public class Solution {
     }
 
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        if (obstacleGrid[obstacleGrid.length-1][obstacleGrid.length-1]==1) return 0;
         return findPath(obstacleGrid, 0, 0, 0);
     }
 
     private int findPath(int[][] obstacleGrid, int row, int column, int path) {
-        if (obstacleGrid[obstacleGrid.length - 1][obstacleGrid.length - 1] == 1) {
-            path++;
+        if (row == obstacleGrid.length - 1 && column == obstacleGrid.length - 1) {
+            path = path + 1;
+            obstacleGrid[obstacleGrid.length-1][obstacleGrid.length-1]=0;
             return path;
         }
         if (row < obstacleGrid.length - 1 && obstacleGrid[row + 1][column] == 0) {
