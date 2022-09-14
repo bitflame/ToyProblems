@@ -85,21 +85,23 @@ public class Solution {
     }
 
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
-        if (obstacleGrid[obstacleGrid.length-1][obstacleGrid.length-1]==1) return 0;
+        int n = obstacleGrid.length;
+        int m = obstacleGrid[0].length;
+        if (obstacleGrid[n - 1][m - 1] == 1 || obstacleGrid[0][0] == 1) return 0;
         return findPath(obstacleGrid, 0, 0, 0);
     }
 
     private int findPath(int[][] obstacleGrid, int row, int column, int path) {
         if (row == obstacleGrid.length - 1 && column == obstacleGrid.length - 1) {
             path = path + 1;
-            obstacleGrid[obstacleGrid.length-1][obstacleGrid.length-1]=0;
+            obstacleGrid[obstacleGrid.length - 1][obstacleGrid.length - 1] = 0;
             return path;
         }
         if (row < obstacleGrid.length - 1 && obstacleGrid[row + 1][column] == 0) {
             obstacleGrid[row + 1][column] = 1;
             path = findPath(obstacleGrid, row + 1, column, path);
         }
-        if (column < obstacleGrid.length - 1 && obstacleGrid[row][column + 1] == 0) {
+        if (column < obstacleGrid[0].length - 1 && obstacleGrid[row][column + 1] == 0) {
             obstacleGrid[row][column + 1] = 1;
             path = findPath(obstacleGrid, row, column + 1, path);
         }
@@ -113,6 +115,14 @@ public class Solution {
         System.out.println("Expected: 2, Getting: " + s.uniquePathsWithObstacles(obsGrid));
         obsGrid = new int[][]{{0, 0}, {0, 1}};
         System.out.println("Expected: 0, Getting: " + s.uniquePathsWithObstacles(obsGrid));
+        obsGrid = new int[][]{{0, 1}};
+        System.out.println("Expected: 0, Getting: " + s.uniquePathsWithObstacles(obsGrid));
+        obsGrid = new int[][]{{0}};
+        System.out.println("Expexcted: 1, Getting: " + s.uniquePathsWithObstacles(obsGrid));
+        obsGrid = new int[][]{{1, 0}};
+        System.out.println("Expected: 0, Getting: " + s.uniquePathsWithObstacles(obsGrid));
+        obsGrid = new int[][]{{0}, {0}};
+        System.out.println("Expected: 1, Getting:    " + s.uniquePathsWithObstacles(obsGrid));
         String subString1 = "abcabcbb";
         String subString2 = "bbbbb";
         String subString3 = "pwwkew";
