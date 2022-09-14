@@ -46,18 +46,17 @@ public class Solution {
     public int lenghtOfLongestSubString(String s) {
         if (s == null || s.length() == 0) return 0;
         if (s.length() == 1) return 1;
-        HashSet< Character> uniqueString = new HashSet<Character>();
+        HashSet<Character> uniqueString = new HashSet<Character>();
         int i = 0;//start of string
         int j = 0;// current cursor
         int longestLength = 0;
         while (j < s.length()) {
-            if (!uniqueString.contains(s.charAt(j))){
+            if (!uniqueString.contains(s.charAt(j))) {
                 uniqueString.add(s.charAt(j));
                 j++;
-            }
-           else {
+            } else {
                 i++;
-                j = i ;
+                j = i;
                 uniqueString = new HashSet<>();
                 uniqueString.add(s.charAt(j));
                 j++;
@@ -67,9 +66,50 @@ public class Solution {
         return longestLength;
     }
 
+    private class Cell {
+        int row;
+        int col;
+
+        public int getRow() {
+            return row;
+        }
+
+        public void setRow(int row) {
+            this.row = row;
+        }
+
+        public Cell(int r, int c) {
+            this.row = r;
+            this.col = c;
+        }
+    }
+
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        return findPath(obstacleGrid, 0, 0, 0);
+    }
+
+    private int findPath(int[][] obstacleGrid, int row, int column, int path) {
+        if (obstacleGrid[obstacleGrid.length - 1][obstacleGrid.length - 1] == 1) {
+            path++;
+            return path;
+        }
+        if (row < obstacleGrid.length - 1 && obstacleGrid[row + 1][column] == 0) {
+            obstacleGrid[row + 1][column] = 1;
+            path = findPath(obstacleGrid, row + 1, column, path);
+        }
+        if (column < obstacleGrid.length - 1 && obstacleGrid[row][column + 1] == 0) {
+            obstacleGrid[row][column + 1] = 1;
+            path = findPath(obstacleGrid, row, column + 1, path);
+        }
+        return path;
+    }
+
     public static void main(String[] args) {
 
         Solution s = new Solution();
+        int[][] obsGrid = {{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
+        System.out.println(s.uniquePathsWithObstacles(obsGrid));
+
         String subString1 = "abcabcbb";
         String subString2 = "bbbbb";
         String subString3 = "pwwkew";
