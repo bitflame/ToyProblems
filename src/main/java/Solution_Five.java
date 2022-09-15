@@ -1,4 +1,5 @@
 public class Solution_Five {
+    /* solves problem # 63 of leetcode number of Unique Paths in a matrix with obstacles */
     public int uniquePaths(int[][] obstcleGrid) {
         if (obstcleGrid[0][0] == 1) return 0;
         else obstcleGrid[0][0] = 1;
@@ -22,10 +23,22 @@ public class Solution_Five {
     public static void main(String[] args) {
         int[][] grid = new int[][]{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
         Solution_Five solution_five = new Solution_Five();
-        System.out.println("Expecting: 2, Getting: " + solution_five.uniquePaths(grid));
+        System.out.println("Test 1 Expecting: 2, Getting: " + solution_five.uniquePaths(grid));
         grid = new int[][]{{0, 0}, {0, 1}};
-        System.out.println("Expecting: 0, Getting: " + solution_five.uniquePaths(grid));
+        System.out.println("Test 2 Expecting: 0, Getting: " + solution_five.uniquePaths(grid));
         grid = new int[][]{{0, 1}};
-        System.out.println("Expecting: 0, Getting: " + solution_five.uniquePaths(grid));
+        System.out.println("Test 3 Expecting: 0, Getting: " + solution_five.uniquePaths(grid));
+        grid = new int[][]{{0}};
+        System.out.println("Test 4 Expecting: 1, Getting: " + solution_five.uniquePaths(grid));
+        grid = new int[][]{{1, 0}};
+        System.out.println("Test 5 Expecting: 0, Getting: " + solution_five.uniquePaths(grid));
+        grid = new int[][]{{0}, {0}};
+        System.out.println("Test 6 Expecting: 1, Getting: " + solution_five.uniquePaths(grid));
+        grid = new int[][]{{0}};
+        System.out.println("Test 7  Expecting: 1, Getting: " + solution_five.uniquePaths(grid));
+        grid = new int[][]{{0, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 0}};
+        System.out.println("Test 8 Expecting: 7, Getting: " + solution_five.uniquePaths(grid));
+        grid = new int[][]{{0, 0}, {1, 1}, {0, 0}};
+        System.out.println("Test 9 Expecting: 0, Getting: " + solution_five.uniquePaths(grid));
     }
 }
