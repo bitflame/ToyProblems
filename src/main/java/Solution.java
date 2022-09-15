@@ -87,44 +87,69 @@ public class Solution {
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int n = obstacleGrid.length;
         int m = obstacleGrid[0].length;
+        if (m == 1 && n == 1 && obstacleGrid[0][0] == 0) return 1;
         if (obstacleGrid[n - 1][m - 1] == 1 || obstacleGrid[0][0] == 1) return 0;
+
         return findPath(obstacleGrid, 0, 0, 0);
     }
 
     private int findPath(int[][] obstacleGrid, int row, int column, int path) {
-        if (obstacleGrid[obstacleGrid.length - 1][obstacleGrid[row].length - 1]==1) {
+        if (obstacleGrid[obstacleGrid.length - 1][obstacleGrid[row].length - 1] == 2) {
             path = path + 1;
-            obstacleGrid[obstacleGrid.length - 1][obstacleGrid[row  ].length - 1] = 0;
+            obstacleGrid[obstacleGrid.length - 1][obstacleGrid[row].length - 1] = 0;
             return path;
         }
-        if (row < obstacleGrid.length - 1 && obstacleGrid[row + 1][column] == 0) {
-            obstacleGrid[row + 1][column] = 1;
+        if (row < obstacleGrid.length - 1 && obstacleGrid[row + 1][column] != 1) {
+            obstacleGrid[row + 1][column] = 2;
             path = findPath(obstacleGrid, row + 1, column, path);
         }
 
-            if (column < obstacleGrid[row].length - 1 && obstacleGrid[row][column + 1] == 0) {
-                obstacleGrid[row][column + 1] = 1;
-                path = findPath(obstacleGrid, row, column + 1, path);
-            }
+        if (column < obstacleGrid[row].length - 1 && obstacleGrid[row][column + 1] != 1) {
+            obstacleGrid[row][column + 1] = 2;
+            path = findPath(obstacleGrid, row, column + 1, path);
+        }
 
         return path;
+    }
+
+    public int getNumOfCells(int[][] obstacleGrid) {
+        int numOfCells = 0;
+        for (int i = 0; i < obstacleGrid.length; i++) {
+            numOfCells += obstacleGrid[i].length;
+        }
+        return numOfCells;
     }
 
     public static void main(String[] args) {
 
         Solution s = new Solution();
         int[][] obsGrid = {{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
+        System.out.println("Total cells of Grid1 Expecting 9, Getting: " + s.getNumOfCells(obsGrid));
         System.out.println("Test 1 - Expected: 2, Getting: " + s.uniquePathsWithObstacles(obsGrid));
         obsGrid = new int[][]{{0, 0}, {0, 1}};
+        System.out.println("Total cells of Grid2 Expecting 4, Getting: " + s.getNumOfCells(obsGrid));
         System.out.println("Test 2 - Expected: 0, Getting: " + s.uniquePathsWithObstacles(obsGrid));
         obsGrid = new int[][]{{0, 1}};
+        System.out.println("Total cells of Grid3 Expecting 2, Getting: " + s.getNumOfCells(obsGrid));
         System.out.println("Test 3 - Expected: 0, Getting: " + s.uniquePathsWithObstacles(obsGrid));
         obsGrid = new int[][]{{0}};
+        System.out.println("Total cells of Grid4 Expecting 1, Getting: " + s.getNumOfCells(obsGrid));
         System.out.println("Test 4 - Expected: 1, Getting: " + s.uniquePathsWithObstacles(obsGrid));
         obsGrid = new int[][]{{1, 0}};
+        System.out.println("Total cells of Grid5 Expecting 2, Getting: " + s.getNumOfCells(obsGrid));
         System.out.println("Test 5 - Expected: 0, Getting: " + s.uniquePathsWithObstacles(obsGrid));
         obsGrid = new int[][]{{0}, {0}};
-        System.out.println("Test 6 - Expected: 1, Getting:    " + s.uniquePathsWithObstacles(obsGrid));
+        System.out.println("Total cells of Grid6 Expecting 2, Getting: " + s.getNumOfCells(obsGrid));
+        System.out.println("Test 6 - Expected: 1, Getting: " + s.uniquePathsWithObstacles(obsGrid));
+        obsGrid = new int[][]{{0}};
+        System.out.println("Total cells of Grid7 Expecting 1, Getting: " + s.getNumOfCells(obsGrid));
+        System.out.println("Test 7 - Expected: 1, Getting: " + s.uniquePathsWithObstacles(obsGrid));
+        // [[0,0,0,0],[0,1,0,0],[0,0,0,0],[0,0,1,0],[0,0,0,0]]
+        obsGrid = new int[][]{{0, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 0}};
+        System.out.println("Total cells of Grid8 Expecting 20, Getting: " + s.getNumOfCells(obsGrid));
+        System.out.println("Test 8 - Expected: 7, Getting: " + s.uniquePathsWithObstacles(obsGrid));
+
+
         String subString1 = "abcabcbb";
         String subString2 = "bbbbb";
         String subString3 = "pwwkew";
