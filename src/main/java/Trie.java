@@ -1,63 +1,71 @@
 import edu.princeton.cs.algs4.Queue;
 
 import javax.swing.plaf.PanelUI;
-// code from Sedgwik book
-public class Trie<Value> {
+
+// Modified code from Sedgwik book
+public class Trie {
     private static int R = 256;//radix
     private Node root;
 
+    public Trie() {
+        root = new Node();
+    }
+
     private static class Node {
         private Node[] next = new Node[R];
-        private Object val;
+        private boolean endOfWord = false;
     }
 
-    public Value get(String key) {
-        Node x = get(root, key, 0);
+
+    public boolean search(String word) {
+        Node x = search(root, word, 0);
+        return (x == null) ? false : true;
+    }
+
+    private Node search(Node x, String word, int d) {
         if (x == null) return null;
-        return (Value) x.val;
+        if (d == word.length() && x.endOfWord == false) return null;
+        if (d == word.length()) return x;
+        char c = word.charAt(d);
+        return search(x.next[c], word, d + 1);
     }
 
-    private Node get(Node x, String key, int d) {
-        if (x == null) return null;
-        if (d == key.length()) return x;
-        char c = key.charAt(d);
-        return get(x.next[c], key, d);
+    public void insert(String key) {
+        root = insert(root, key, 0);
     }
 
-    public void put(String key, Value value) {
-        root = put(root, key, value, 0);
-    }
-
-    private Node put(Node x, String key, Value value, int d) {
-        if (x == null) return new Node();
+    private Node insert(Node x, String key, int d) {
+        if (x == null) x = new Node();
         if (d == key.length()) {
-            x.val = value;
+            x.endOfWord = true;
             return x;
         }
         char c = key.charAt(d);
-        x.next[c] = put(x.next[c], key, value, d + 1);
+        x.next[c] = insert(x.next[c], key, d + 1);
         return x;
     }
 
-    public Iterable<String> keys() {
-        return keysWithPrefix("");
+    public boolean startsWith(String pre) {
+        return startsWith(root, pre, 0);
     }
 
-    public Iterable<String> keysWithPrefix(String pre) {
-        Queue<String> q = new Queue<>();
-        collect(get(root, pre, 0), pre, q);
-        return q;
-    }
-
-    private void collect(Node x, String pre, Queue<String> q) {
-        if (x == null) return;
-        if (x.val != null) q.enqueue(pre);
-        for (char c = 0; c < R; c++) collect(x.next[c], pre + c, q);
+    private boolean startsWith(Node x, String pre, int d) {
+        if (x == null) return false;
+        if (d == pre.length()) return true;
+        char c = pre.charAt(d);
+        return startsWith(x.next[c], pre, d + 1);
     }
 
     public static void main(String[] args) {
         Trie t = new Trie();
-
+        System.out.println("Inserting apple.");
+        t.insert("apple");
+        System.out.println("apple exists: " + t.search("apple"));
+        System.out.println("app exists:  " + t.search("app"));
+        System.out.println("Starts with \"app\": " + t.startsWith("app"));
+        System.out.println("Inserting app.");
+        t.insert("app");
+        System.out.println("app exists: " + t.search("app"));
     }
 
 }
