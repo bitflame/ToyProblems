@@ -51,7 +51,6 @@ public class TwoSum {
                 result[0] = mapping.get(target - nums[i]);
                 result[1] = i;
             }
-
         }
         return result;
     }
