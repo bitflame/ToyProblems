@@ -41,62 +41,47 @@ public class FourSum {
         else return false;
     }
 
-    private List<List<Integer>> fourSumLeetCodeSolution(int[] nums, int target) {
-        Arrays.sort(nums);
-        return kSum(nums, target, 0, 4);
+    public List<List<Integer>> fourSumLeetCode(int[] nums, int target) {
+        return ksum(nums, target, 0, 4);
     }
 
-    public List<List<Integer>> kSum(int[] nums, long target, int start, int k) {
+    //
+    public List<List<Integer>> ksum(int[] nums, int target, int start, int k) {
         List<List<Integer>> res = new ArrayList<>();
-        if (start == nums.length) {
-            return res;
-        }
-        long average_value = target / k;
-        if (nums[start] > average_value || average_value > nums[nums.length - 1]) {
-            return res;
-        }
-        if (k == 2) {
-            return twoSum(nums, target, start);
-        }
-        for (int i = start; i < nums.length; ++i) {
-            if (i == start || nums[i - 1] != nums[i]) {
-                for (List<Integer> subset : kSum(nums, target - nums[i], i + 1, k - 1)) {
-                    res.add(new ArrayList<>(Arrays.asList(nums[i])));
-                    res.get(res.size() - 1).addAll(subset);
-                }
+        if (start == nums.length) return res;
+        if (k == 2) return two_sum(nums, target, start);
+        long avg_value = target / k;
+        if (nums[start] > avg_value || nums[nums.length - 1] < avg_value) return res;
+        for (int i = start; i < nums.length - 1; i++) {
+            for (List<Integer> subset : ksum(nums, target - nums[i], start + 1, k - 1)) {
+                if (i == start || nums[i - 1] != nums[i]) i++;
+                res.add(new ArrayList<>(Arrays.asList(nums[i])));
+                res.get(res.size() - 1).addAll(subset);
             }
         }
         return res;
     }
 
-    public List<List<Integer>> twoSum(int[] nums, long target, int start) {
+    public List<List<Integer>> two_sum(int[] nums, int target, int start) {
+        int lo = start;
+        int hi = nums.length - 1;
         List<List<Integer>> res = new ArrayList<>();
-        int lo = start, hi = nums.length - 1;
         while (lo < hi) {
             int currSum = nums[lo] + nums[hi];
-            if (currSum < target || (lo > start && nums[lo] == nums[lo - 1])) {
-                ++lo;
-            } else if (currSum > target || (hi < nums.length - 1 && nums[hi] == nums[hi + 1])) {
-                --hi;
-            } else {
-                res.add(Arrays.asList(nums[lo++], nums[hi--]));
-            }
+            if (currSum<target || (lo>start && nums[lo]==nums[lo-1])) ++lo;
+            else if (currSum>target || (hi<nums.length-1&& nums[hi]==nums[hi+1])) --hi;
+            else res.add(Arrays.asList(nums[lo++],nums[hi--]));
         }
         return res;
     }
 
-    public List<List<Integer>> twoSumUsingHashSet(int[] nums, long target, int start) {
-        List<List<Integer>> res = new ArrayList<>();
-        Set<Long> s = new HashSet<>();
-        for (int i = start; i < nums.length; ++i) {
-            if (res.isEmpty() || res.get(res.size() - 1).get(1) != nums[i]) {
-                if (s.contains(target - nums[i])) {
-                    res.add(Arrays.asList((int) target - nums[i], nums[i]));
-                }
-            }
-            s.add((long) nums[i]);
+    private void testing() {
+        int[] someArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int j = 0;
+        for (int i = 0; i < someArray.length - 1; i++, ++j) {
+            System.out.println(i);
+            System.out.println(j);
         }
-        return res;
     }
 
     public static void main(String[] args) {
@@ -112,5 +97,6 @@ public class FourSum {
             total += i;
         }
         System.out.println(total);
+        four_Sum.testing();
     }
 }
